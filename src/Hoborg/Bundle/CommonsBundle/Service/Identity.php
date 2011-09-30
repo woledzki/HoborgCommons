@@ -1,5 +1,5 @@
 <?php
-namespace Hoborg\Bundle\Commons\Service;
+namespace Hoborg\Bundle\CommonsBundle\Service;
 
 class Identity {
 

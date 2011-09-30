@@ -1,0 +1,11 @@
+_home:
+    pattern:  /home
+    defaults: { _controller: CommonsBundle:Index:index }
+
+_api:
+    pattern:  /api/cmns/identity/login
+    defaults: { _controller: cmns_identity:loginAction }
+
+api_identity_user:
+    pattern:  /api/cmns/identity/user/{login}
+    defaults: { _controller: cmns_user:user }

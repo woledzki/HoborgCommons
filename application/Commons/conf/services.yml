@@ -1,0 +1,40 @@
+
+services:
+    cmns_user:
+        class: Hoborg\Bundle\CommonsBundle\Service\User
+        arguments:
+            - @cmns_mapper_factory
+
+#    cmns_api_factory:
+#        arguments:
+#            - @cmns_mapper_factory
+
+    cmns_mapper_factory:
+        class: Hoborg\Bundle\CommonsBundle\Mapper\Factory
+        arguments:
+            - @doctrine.dbal.connection_factory
+
+    pp_twig_loader:
+        class: Twig_Loader_Filesystem
+        arguments: [/Users/woledzki/www/pleasepledge.local/]
+
+    pp_api_factory:
+        class: PleasePledge\Api\Factory
+
+    pp_component_factory:
+        class: PleasePledge\Component\Factory
+        arguments: 
+            -
+                componentConfiguration: %display_service_config%
+                componentPath: %display_service_components%
+            - @twig
+            - @pp_api_factory
+
+    pp_display:
+        class: PleasePledge\Frontend\Service\Display
+        arguments: 
+            - 
+                root: %display_service_root%
+                page_dir: page
+                include_dir: includes
+            - @pp_component_factory
