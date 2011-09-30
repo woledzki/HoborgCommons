@@ -1,3 +1,18 @@
 [submodule "vendors/Symfony2"]
 	path = vendors/Symfony2
 	url = git://github.com/symfony/symfony.git
+[submodule "vendors/Monolog"]
+	path = vendors/Monolog
+	url = git://github.com/Seldaek/monolog.git
+[submodule "vendors/Twig"]
+	path = vendors/Twig
+	url = git://github.com/fabpot/Twig.git
+[submodule "vendors/Doctrine2"]
+	path = vendors/Doctrine2
+	url = git://github.com/doctrine/doctrine2.git
+[submodule "vendors/DoctrineCommon"]
+	path = vendors/DoctrineCommon
+	url = git://github.com/doctrine/common.git
+[submodule "vendors/DoctrineDBAL"]
+	path = vendors/DoctrineDBAL
+	url = git://github.com/doctrine/dbal.git
