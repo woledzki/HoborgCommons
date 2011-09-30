@@ -156,4 +156,5 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase {
 			)
 		);
 	}
+
 }
