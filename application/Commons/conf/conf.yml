@@ -8,12 +8,19 @@ framework:
     #translator:      { fallback: en }
     secret:          %secret%
     charset:         UTF-8
-    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-    form:            true
     csrf_protection: true
+    form: true
+
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        http_port: 80
+        https_port: 443
+
     validation:      { enable_annotations: true }
+
     templating: 
         engines: ['twig']  #assets_version: SomeVersionScheme
+
     session:
         default_locale: %locale%
         auto_start:     true
@@ -38,3 +45,39 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: false
+
+behat:
+    context:
+        class: 'FeatureContext'
+        parameters:
+          database:
+            username: 'root'
+            password: ''
+            dbname:   'behat-demo'
+            host:     '127.0.0.1'
+            driver:   'pdo_mysql'
+
+parameters:
+    Phabric:
+      database:
+          username: 'root'
+          password: ''
+          dbname:   'behat-demo'
+          host:     '127.0.0.1'
+          driver:   'pdo_mysql'
+      baseurl: 'http://behat-demo.dev/'
+      registry:
+          baseurl: 'http://behat-demo.dev/'
+          eventsResourceUri: events
+          eventsResourceMethod: GET
+      entities:
+          User:
+            tableName: 'user'
+            entityName: 'User'
+            primaryKey: 'id'
+            nameCol: login
+            nameTransformations:
+              Login: login
+              First Name: name_first
+              Last Name: name_last
+              Password: password

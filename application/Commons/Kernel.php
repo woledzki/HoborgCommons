@@ -20,8 +20,10 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 
 		if (in_array($this->getEnvironment(), array('dev', 'test'))) {
 			$bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-			//$bundles[] = new \Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-			//$bundles[] = new \Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+		}
+
+		if ('test' === $this->getEnvironment()) {
+			$bundles[] = new \Behat\BehatBundle\BehatBundle();
 		}
 
 		return $bundles;
@@ -31,6 +33,7 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 	 * @see Symfony\Component\HttpKernel.KernelInterface::registerContainerConfiguration()
 	 */
 	public function registerContainerConfiguration(LoaderInterface $loader) {
+		var_dump(get_class($loader));
 		$loader->load(__DIR__ . '/conf/conf_' . $this->getEnvironment() . '.yml');
 	}
 
@@ -53,10 +56,10 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 	 */
 	protected function getKernelParameters() {
 		return array_merge(
-			parent::getKernelParameters(),
-			array(
+		parent::getKernelParameters(),
+		array(
 				'kernel.conf_dir' => __DIR__ . '/conf',
-			)
+		)
 		);
 	}
 }

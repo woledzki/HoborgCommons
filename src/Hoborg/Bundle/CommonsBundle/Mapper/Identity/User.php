@@ -6,14 +6,14 @@ use Hoborg\Bundle\CommonsBundle\Mapper\Mapper;
 class User extends Mapper {
 
 	public function getByLogin($login) {
-		$sql = 'SELECT * FROM user WHERE user.login = ' . $this->adapter->quote($login);
+		$sql = 'SELECT user.* FROM user WHERE user.login = ' . $this->adapter->quote($login);
 
-		$result = $this->adapter->fetchAll($sql);
-		if (empty($result)) {
-			return array();
+		$results = $this->adapter->fetchAll($sql);
+		if (1 === count($results)) {
+			return $user = \Hoborg\Bundle\CommonsBundle\Model\Identity\User::fromArray($results[0]);
 		}
 
-		return $result[0];
+		return null;
 	}
 
 	/**
@@ -25,18 +25,16 @@ class User extends Mapper {
 	public function getUserByToken($userToken) {
 		$user = null;
 
-		$sql = 'SELECT * FROM user ' .
+		$sql = 'SELECT user.* FROM user ' .
                 'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
                 'WHERE user_token.`id` = \''. $userToken . '\'';
 
 		$results = $this->adapter->fetchAll($sql);
-
 		if (1 === count($results)) {
-			$user = new Commons_Model_Identity_User();
-			$user->fromArray($results[0]);
+			return $user = \Hoborg\Bundle\CommonsBundle\Model\Identity\User::fromArray($results[0]);
 		}
 
-		return $user;
+		return null;
 	}
 
 	/**
@@ -48,18 +46,17 @@ class User extends Mapper {
 	public function getUserById($id) {
 		$user = null;
 
-		$sql = 'SELECT * FROM user ' .
+		$sql = 'SELECT user.* FROM user ' .
                 'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
                 'WHERE user.`id` = '. $id;
 
 		$results = $this->adapter->fetchAll($sql);
 
 		if (1 === count($results)) {
-			$user = new Commons_Model_Identity_User();
-			$user->fromArray($results[0]);
+			return $user = \Hoborg\Bundle\CommonsBundle\Model\Identity\User::fromArray($results[0]);
 		}
 
-		return $user;
+		return null;
 	}
 
 	/**
@@ -80,8 +77,7 @@ class User extends Mapper {
 		$results = $this->adapter->fetchAll($sql);
 
 		if (1 === count($results)) {
-			$user = new Commons_Model_Identity_User();
-			$user->fromArray($results[0]);
+			$user = \Hoborg\Bundle\CommonsBundle\Model\Identity\User::fromArray($results[0]);
 		}
 
 		return $user;

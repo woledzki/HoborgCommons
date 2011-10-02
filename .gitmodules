@@ -16,3 +16,12 @@
 [submodule "vendors/DoctrineDBAL"]
 	path = vendors/DoctrineDBAL
 	url = git://github.com/doctrine/dbal.git
+[submodule "vendors/Behat"]
+	path = vendors/Behat
+	url = git://github.com/Behat/Behat.git
+[submodule "vendors/bundles/Behat/BehatBundle"]
+	path = vendors/bundles/Behat/BehatBundle
+	url = git://github.com/Behat/BehatBundle.git
+[submodule "vendors/Phabric"]
+	path = vendors/Phabric
+	url = git://github.com/benwaine/Phabric.git

@@ -9,10 +9,14 @@ $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
 	'Hoborg' => H_ROOT . '/src',
 	'Symfony' => H_VENDOR . '/Symfony2/src',
+	'Behat\\BehatBundle' => H_VENDOR . '/bundles/',
+	'Behat\\Behat' => H_VENDOR . '/Behat/src',
+	'Behat\\Gherkin' => H_VENDOR . '/Behat/vendor/Gherkin/src',
+	'Phabric' => H_VENDOR . '/Phabric/lib',
 	'Doctrine\\Common' => H_VENDOR . '/DoctrineCommon/lib',
-	'Doctrine\\DBAL'   => H_VENDOR . '/DoctrineDBAL/lib',
-	'Doctrine'         => H_VENDOR . '/Doctrine2/lib',
-	'Monolog'          => H_VENDOR . '/Monolog/src',
+	'Doctrine\\DBAL' => H_VENDOR . '/DoctrineDBAL/lib',
+	'Doctrine' => H_VENDOR . '/Doctrine2/lib',
+	'Monolog' => H_VENDOR . '/Monolog/src',
 ));
 $loader->registerPrefixes(array(
 	'Twig_Extensions_' => __DIR__.'/../vendor/TwigExtensions/lib',

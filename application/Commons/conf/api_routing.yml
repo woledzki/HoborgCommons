@@ -1,0 +1,35 @@
+api_identity_login:
+    pattern:  /api/cmns/identity/login
+    defaults: { _controller: CommonsBundle:Identity:login}
+    requirements:
+        _method: POST
+
+api_identity_logout:
+    pattern:  /api/cmns/identity/logout
+    defaults: { _controller: CommonsBundle:Identity:logout}
+    requirements:
+        _method: GET
+
+api_identity_getUser:
+    pattern:  /api/cmns/identity/user/{login}
+    defaults: { _controller: CommonsBundle:Identity:getUser }
+    requirements:
+        _method: GET
+
+api_identity_updateUser:
+    pattern:  /api/cmns/identity/user/{login}
+    defaults: { _controller: CommonsBundle:Identity:updateUser }
+    requirements:
+        _method: PUT
+
+api_identity_deleteUser:
+    pattern:  /api/cmns/identity/user/{login}
+    defaults: { _controller: CommonsBundle:Identity:deleteUser }
+    requirements:
+        _method: DELETE
+
+api_identity_addUser:
+    pattern:  /api/cmns/identity/user/new
+    defaults: { _controller: CommonsBundle:Identity:addUser }
+    requirements:
+        _method: POST

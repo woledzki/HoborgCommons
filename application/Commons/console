@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/conf/init.php';
+require_once __DIR__.'/Kernel.php';
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+$input = new ArgvInput();
+$env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
+$debug = !$input->hasParameterOption(array('--no-debug', ''));
+
+$kernel = new Hoborg\Commons\Kernel($env, $debug);
+$application = new Application($kernel);
+$application->run();

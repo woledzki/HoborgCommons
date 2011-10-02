@@ -1,7 +1,8 @@
 <?php
-namespace Hoborg\Bundle\CommonsBundle\Service;
+namespace Hoborg\Bundle\CommonsBundle\Service\Identity;
 
 use Hoborg\Bundle\CommonsBundle\Mapper\Factory;
+use Hoborg\Bundle\CommonsBundle\Service\Identity\User\Login;
 use Symfony\Component\HttpFoundation\Response;
 
 class User {
@@ -15,24 +16,20 @@ class User {
 		$this->mapperFactory = $mapperFactory;
 	}
 
+	public function login($login, $password) {
+		$login = new Login($login, $password, $this->mapperFactory->getUserMapper());
+		$user = $login->process();
+		return $user;
+	}
+
 	/**
 	 * Returns public data gor given user.
 	 *
 	 * @param string $login
 	 */
-	public function user($login) {
+	public function getUser($login) {
 		$userMapper = $this->mapperFactory->getUserMapper();
 		$user = $userMapper->getByLogin($login);
-
-		$response = new Response();
-		if (empty($user)) {
-			$response->setContent(json_encode(array('error' => 'user not found')) . "\n");
-		} else {
-			$response->setContent(json_encode(array('user' => $user)) . "\n");
-		}
-
-		$response->setStatusCode(200);
-		$response->headers->set('Content-Type', 'application/json');
-		return $response;
+		return $user;
 	}
 }
