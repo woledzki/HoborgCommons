@@ -52,7 +52,7 @@ class Factory {
 	 */
 	protected function getDbConnectionName($module) {
 		return array(
-			'dbname' => 'hoborg_dev_cmns',
+			'dbname' => 'hoborg_test',
 			'user' => 'hoborg_dev',
 			'password' => 'hoborg',
 			'host' => 'localhost',

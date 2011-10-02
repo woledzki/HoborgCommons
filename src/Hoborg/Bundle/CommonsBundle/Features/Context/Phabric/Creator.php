@@ -18,16 +18,24 @@ class Creator extends BehatContext {
 		parent::__construct($parameters);
 
 		$phabricConfig = $this->getContainer()->getParameter('Phabric');
+		$dbConfog = $this->getContainer()->getParameter('database');
 		$db = \Doctrine\DBAL\DriverManager::getConnection(array(
-			'dbname' => $phabricConfig['database']['dbname'],
-			'user' => $phabricConfig['database']['username'],
-			'password' => $phabricConfig['database']['password'],
-			'host' => $phabricConfig['database']['host'],
-			'driver' => $phabricConfig['database']['driver'],
+			'dbname' => $dbConfog['dbname'],
+			'user' => $dbConfog['username'],
+			'password' => $dbConfog['password'],
+			'host' => $dbConfog['host'],
+			'driver' => $dbConfog['driver'],
 		));
 
 		$datasource = new \Phabric\Datasource\Doctrine($db, $phabricConfig['entities']);
 		$this->phabric = new \Phabric\Phabric($datasource);
+
+
+		$this->phabric->addDataTransformation(
+			'MD5', function($string) {
+				return md5($string);
+			}
+		);
 
 		$user = $this->phabric->createEntity('user', $phabricConfig['entities']['User']);
 	}

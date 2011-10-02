@@ -59,12 +59,6 @@ behat:
 
 parameters:
     Phabric:
-      database:
-          username: 'root'
-          password: ''
-          dbname:   'behat-demo'
-          host:     '127.0.0.1'
-          driver:   'pdo_mysql'
       baseurl: 'http://behat-demo.dev/'
       registry:
           baseurl: 'http://behat-demo.dev/'
@@ -81,3 +75,5 @@ parameters:
               First Name: name_first
               Last Name: name_last
               Password: password
+            dataTransformations:
+              password: MD5
