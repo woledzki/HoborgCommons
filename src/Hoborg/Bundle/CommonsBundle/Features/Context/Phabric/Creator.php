@@ -12,24 +12,17 @@ Behat\Gherkin\Node\TableNode;
 
 class Creator extends BehatContext {
 
+	const DB_IDENTITY = 'hoborg_cmns_identity';
+
 	protected $phabric = null;
 
 	public function __construct($parameters) {
 		parent::__construct($parameters);
 
 		$phabricConfig = $this->getContainer()->getParameter('Phabric');
-		$dbConfog = $this->getContainer()->getParameter('database');
-		$db = \Doctrine\DBAL\DriverManager::getConnection(array(
-			'dbname' => $dbConfog['dbname'],
-			'user' => $dbConfog['username'],
-			'password' => $dbConfog['password'],
-			'host' => $dbConfog['host'],
-			'driver' => $dbConfog['driver'],
-		));
-
+		$db = $this->getContainer()->get('doctrine')->getConnection(self::DB_IDENTITY);
 		$datasource = new \Phabric\Datasource\Doctrine($db, $phabricConfig['entities']);
 		$this->phabric = new \Phabric\Phabric($datasource);
-
 
 		$this->phabric->addDataTransformation(
 			'MD5', function($string) {
@@ -43,9 +36,9 @@ class Creator extends BehatContext {
 	/**
 	 * @Given /^a identity user exist:$/
 	 */
-	public function aIdentityUserExist(TableNode $table) {
+	public function aIdentityUserExist(TableNode $users) {
 		$user = $this->phabric->getEntity('user');
-		$user->insertFromTable($table);
+		$user->insertFromTable($users);
 	}
 
 }

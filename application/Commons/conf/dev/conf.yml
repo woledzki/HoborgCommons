@@ -1,6 +1,6 @@
 imports:
-  - { resource: parameters.ini }
   - { resource: ./../conf.yml }
+  - { resource: parameters.ini }
 
 framework:
   router: { resource: "%kernel.conf_dir%/routing_dev.yml" }

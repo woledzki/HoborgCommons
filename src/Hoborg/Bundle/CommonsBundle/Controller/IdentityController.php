@@ -11,7 +11,7 @@ class IdentityController extends Controller {
 
 	protected $response = null;
 	protected $request = null;
-	protected $userApi = null;
+	protected $identityApi = null;
 
 	/**
 	 * Initialize objects shared accross all actions.
@@ -19,7 +19,7 @@ class IdentityController extends Controller {
 	 * @return void
 	 */
 	protected function init() {
-		$this->userApi = $this->get('cmns_user');
+		$this->identityApi = $this->get('hoborg.identity');
 		$this->request = $this->getRequest();
 	}
 
@@ -46,7 +46,7 @@ class IdentityController extends Controller {
 
 		$login = $this->request->request->get('login');
 		$password = $this->request->request->get('password');
-		$user = $this->userApi->login($login, $password);
+		$user = $this->identityApi->login($login, $password);
 
 		// log in user properly - session
 		// ...
@@ -60,11 +60,11 @@ class IdentityController extends Controller {
 
 	public function logoutAction() {
 		// get user from session
-		$user = $this->userApi->getUser('wojtek.oledzki');
+		$user = $this->identityApi->getUser('wojtek.oledzki');
 
 		// and logout
 		$response = array(
-			'success' => $this->userApi->logout($user),
+			'success' => $this->identityApi->logout($user),
 		);
 
 		return $this->jsonSuccessResponse($response);
@@ -73,7 +73,7 @@ class IdentityController extends Controller {
 	public function getUserAction($login) {
 		$this->init();
 
-		$user = $this->userApi->getUser($login);
+		$user = $this->identityApi->getUserByLogin($login);
 		$userArray = array();
 		if (empty($user)) {
 		} else {

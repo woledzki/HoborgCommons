@@ -5,7 +5,7 @@ use Hoborg\Bundle\CommonsBundle\Mapper\Identity\User;
 
 class Factory {
 
-	const DB_IDENTITY_NAME = 'db.identity';
+	const DB_IDENTITY_NAME = 'hoborg_cmns_identity';
 
 	/**
 	 * @var Hoborg\Bundle\CommonsBundle\Mapper\User
@@ -24,8 +24,8 @@ class Factory {
 	 *
 	 * @param \Symfony\Bundle\DoctrineBundle\ConnectionFactory $adapter
 	 */
-	public function __construct(\Symfony\Bundle\DoctrineBundle\ConnectionFactory $connectionFactory) {
-		$this->connectionFactory = $connectionFactory;
+	public function __construct($doctrine) {
+		$this->connectionFactory = $doctrine;
 	}
 
 	/**
@@ -35,28 +35,11 @@ class Factory {
 	 */
 	public function getUserMapper() {
 		if (null === $this->userMapper) {
-			$connectionConf = static::getDbConnectionName(self::DB_IDENTITY_NAME);
-			$adapter = $this->connectionFactory->createConnection($connectionConf);
+			$adapter = $this->connectionFactory->getConnection(self::DB_IDENTITY_NAME);
 			$this->userMapper = new User($adapter);
 		}
 
 		return $this->userMapper;
 	}
 
-	/**
-	 * Returns DB configuration array for given module name.
-	 *
-	 * @param string $module
-	 *
-	 * @return array
-	 */
-	protected function getDbConnectionName($module) {
-		return array(
-			'dbname' => 'hoborg_test',
-			'user' => 'hoborg_dev',
-			'password' => 'hoborg',
-			'host' => 'localhost',
-			'driver' => 'pdo_mysql',
-		);
-	}
 }

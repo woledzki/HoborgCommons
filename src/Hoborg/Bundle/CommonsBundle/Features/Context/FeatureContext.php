@@ -10,6 +10,7 @@ use Behat\Behat\Context\ClosuredContextInterface,
 	Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
 	Behat\Gherkin\Node\TableNode;
+use Behat\Behat\Event\SuiteEvent;
 
 //
 // Require 3rd-party libraries here:
@@ -25,10 +26,23 @@ class FeatureContext extends BehatContext {
 
 	public function __construct($parameters) {
 		parent::__construct($parameters);
+
 		$this->useContext('api_user', new Api\Direct\UserContext($parameters));
 		$this->useContext('api-rest_user', new Api\Rest\UserContext($parameters));
 		$this->useContext('api_response', new Api\ResponseContext($parameters));
 		$this->useContext('phabric_creator', new Phabric\Creator($parameters));
 	}
 
+	/** @BeforeSuite */
+	public static function setup(SuiteEvent $event) {
+		$db = $event->getContextParameters()->getContainer()->get('doctrine')->getConnection('hoborg_cmns_identity');
+
+		// cleanup DB
+		//$sql = 'TRUNCATE TABLE user; TRUNCATE TABLE user_token';
+		//$db->fetchAll($sql);
+	}
+
+	/** @AfterSuite */
+	public static function teardown(SuiteEvent $event) {
+	}
 }

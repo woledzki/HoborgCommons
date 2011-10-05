@@ -1,7 +1,7 @@
 
 services:
-    cmns_user:
-        class: Hoborg\Bundle\CommonsBundle\Service\Identity\User
+    hoborg.identity:
+        class: Hoborg\Bundle\CommonsBundle\Service\Identity
         arguments:
             - @cmns_mapper_factory
 

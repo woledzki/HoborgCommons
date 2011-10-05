@@ -27,7 +27,7 @@ class UserContext extends BehatContext {
 		$container = $this->getContainer();
 
 		// save this response
-		$user = $container->get('cmns_user')->login($login, $password);
+		$user = $container->get('hoborg.identity')->login($login, $password);
 		$userArray = array();
 		if (!empty($user)) {
 			$userArray = $user->toArray();
@@ -44,7 +44,7 @@ class UserContext extends BehatContext {
 		$container = $this->getContainer();
 
 		// save this response
-		//		$user = $container->get('cmns_user')->logout($userLogin);
+		//		$user = $container->get('hoborg.identity')->logout($userLogin);
 	}
 
 
@@ -53,7 +53,7 @@ class UserContext extends BehatContext {
 	 */
 	public function iUseInternalApiToRequestUser($userLogin) {
 		$container = $this->getContainer();
-		$user = $container->get('cmns_user')->getUser($userLogin);
+		$user = $container->get('hoborg.identity')->getUserByLogin($userLogin);
 
 		// save this response
 		$userArray = array();

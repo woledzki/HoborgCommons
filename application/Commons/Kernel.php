@@ -33,7 +33,6 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 	 * @see Symfony\Component\HttpKernel.KernelInterface::registerContainerConfiguration()
 	 */
 	public function registerContainerConfiguration(LoaderInterface $loader) {
-		var_dump(get_class($loader));
 		$loader->load(__DIR__ . '/conf/'.$this->getEnvironment().'/conf.yml');
 	}
 

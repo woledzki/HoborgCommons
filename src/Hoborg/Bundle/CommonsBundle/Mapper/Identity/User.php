@@ -26,8 +26,8 @@ class User extends Mapper {
 		$user = null;
 
 		$sql = 'SELECT user.* FROM user ' .
-                'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
-                'WHERE user_token.`id` = \''. $userToken . '\'';
+				'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
+				'WHERE user_token.`id` = \''. $userToken . '\'';
 
 		$results = $this->adapter->fetchAll($sql);
 		if (1 === count($results)) {
@@ -47,8 +47,8 @@ class User extends Mapper {
 		$user = null;
 
 		$sql = 'SELECT user.* FROM user ' .
-                'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
-                'WHERE user.`id` = '. $id;
+				'LEFT JOIN user_token on user.`id` = user_token.`user_id` ' .
+				'WHERE user.`id` = '. $id;
 
 		$results = $this->adapter->fetchAll($sql);
 
@@ -71,8 +71,8 @@ class User extends Mapper {
 		$user = null;
 
 		$sql = 'SELECT * FROM user ' .
-                'WHERE `login` = \'' . $login . '\' ' .
-                'AND `password` = \'' . md5($password) . '\'';
+				'WHERE `login` = \'' . $login . '\' ' .
+				'AND `password` = \'' . md5($password) . '\'';
 
 		$results = $this->adapter->fetchAll($sql);
 
