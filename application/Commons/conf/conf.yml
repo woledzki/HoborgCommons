@@ -1,69 +1,70 @@
 imports:
-    - { resource: parameters.ini }
-    - { resource: security.yml }
-    - { resource: services.yml }
-    
+  - { resource: parameters.ini }
+  - { resource: security.yml }
+  - { resource: services.yml }
+
 framework:
-    #esi:             ~
-    #translator:      { fallback: en }
-    secret:          %secret%
-    charset:         UTF-8
-    csrf_protection: true
-    form: true
+  secret: %framework.secret%
+  charset: %framework.charset%
+  csrf_protection: true
+  form: true
 
-    router:
-        resource: "%kernel.root_dir%/config/routing.yml"
-        http_port: 80
-        https_port: 443
+  router:
+    resource: "%kernel.root_dir%/config/routing.yml"
+    http_port: 80
+    https_port: 443
 
-    validation:      { enable_annotations: true }
+  validation: { enable_annotations: true }
 
-    templating: 
-        engines: ['twig']  #assets_version: SomeVersionScheme
+  templating: 
+    engines: ['twig']  #assets_version: SomeVersionScheme
 
-    session:
-        default_locale: %locale%
-        auto_start:     true
+  session:
+    default_locale: %framework.locale%
+    auto_start:     true
 
 # Twig Configuration
 twig:
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
-    cache: /Users/woledzki/www/pleasepledge.local/twig-cache
+  debug: %kernel.debug%
+  strict_variables: %kernel.debug%
+  cache: %kernel.cache%/twig-cache
 
 # Doctrine Configuration
 doctrine:
-    dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+  dbal:
+    default_connection: hoborg_cmns_identity
+    connections:
+      hoborg_cmns_identity:
+        driver:   %db.hoborg.identity.driver%
+        host:     %db.hoborg.identity.host%
+        port:     %db.hoborg.identity.port%
+        dbname:   %db.hoborg.identity.name%
+        user:     %db.hoborg.identity.user%
+        password: %db.hoborg.identity.password%
         charset:  UTF8
 
-    orm:
-        auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: false
+  orm: { }
 
-behat:
-    context:
-        class: 'FeatureContext'
-        parameters:
-          database:
-            username: 'root'
-            password: ''
-            dbname:   'behat-demo'
-            host:     '127.0.0.1'
-            driver:   'pdo_mysql'
+#phabric:
+#  db_bundle: doctrine
+#  default_connection: hoborg_cmns_identity
+#    entities:
+#          User:
+#            tableName: 'user'
+#            entityName: 'User'
+#            primaryKey: 'id'
+#            nameCol: login
+#            nameTransformations:
+#              Login: login
+#              First Name: name_first
+#              Last Name: name_last
+#              Password: password
+#            dataTransformations:
+#              password: MD5
+
 
 parameters:
-    Phabric:
-      baseurl: 'http://behat-demo.dev/'
-      registry:
-          baseurl: 'http://behat-demo.dev/'
-          eventsResourceUri: events
-          eventsResourceMethod: GET
+  Phabric:
       entities:
           User:
             tableName: 'user'

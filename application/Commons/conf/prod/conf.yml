@@ -1,0 +1,17 @@
+imports:
+  - { resource: parameters.ini }
+  - { resource: ./../conf.yml }
+
+web_profiler:
+  toolbar: true
+  intercept_redirects: false
+
+monolog:
+  handlers:
+    main:
+      type:  stream
+      path:  %kernel.logs_dir%/%kernel.environment%.log
+      level: warn
+    firephp:
+      type:  firephp
+      level: info

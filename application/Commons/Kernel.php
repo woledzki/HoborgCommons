@@ -34,7 +34,7 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 	 */
 	public function registerContainerConfiguration(LoaderInterface $loader) {
 		var_dump(get_class($loader));
-		$loader->load(__DIR__ . '/conf/conf_' . $this->getEnvironment() . '.yml');
+		$loader->load(__DIR__ . '/conf/'.$this->getEnvironment().'/conf.yml');
 	}
 
 	/**
@@ -56,10 +56,11 @@ class Kernel extends \Symfony\Component\HttpKernel\Kernel {
 	 */
 	protected function getKernelParameters() {
 		return array_merge(
-		parent::getKernelParameters(),
-		array(
+			parent::getKernelParameters(),
+			array(
 				'kernel.conf_dir' => __DIR__ . '/conf',
-		)
+				'kernel.cache' => __DIR__ . '/cache',
+			)
 		);
 	}
 }

@@ -4,3 +4,9 @@
 
 /application/Commons/cache/*
 
+# Configuration 
+/application/*/conf/*.ini
+!/application/*/conf/*default.ini
+/application/*/conf/*/*.ini
+!/application/*/conf/*/*default.ini
+
