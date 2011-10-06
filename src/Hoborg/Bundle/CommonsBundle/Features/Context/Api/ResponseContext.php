@@ -52,7 +52,7 @@ class ResponseContext extends BehatContext {
 
 			case 'failure':
 			case 'success':
-				throw new PendingException($responseType .' response comming soon...');
+				//throw new PendingException($responseType .' response comming soon...');
 				break;
 		}
 	}

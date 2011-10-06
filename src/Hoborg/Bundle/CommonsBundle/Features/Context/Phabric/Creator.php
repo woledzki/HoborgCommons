@@ -30,7 +30,20 @@ class Creator extends BehatContext {
 			}
 		);
 
+		$this->phabric->addDataTransformation(
+			'UNIQUEID', function($id, $phabric) {
+				static $id = 0;
+				return $id++;
+			}
+		);
+
+		$this->setupUserEntity($phabricConfig);
+	}
+
+	protected function setupUserEntity($phabricConfig) {
 		$user = $this->phabric->createEntity('user', $phabricConfig['entities']['User']);
+
+		$user;
 	}
 
 	/**
@@ -38,7 +51,7 @@ class Creator extends BehatContext {
 	 */
 	public function aIdentityUserExist(TableNode $users) {
 		$user = $this->phabric->getEntity('user');
-		$user->insertFromTable($users);
+		$user->updateFromTable($users);
 	}
 
 }

@@ -72,9 +72,11 @@ parameters:
             primaryKey: 'id'
             nameCol: login
             nameTransformations:
+              Id: id
               Login: login
               First Name: name_first
               Last Name: name_last
               Password: password
             dataTransformations:
+              id: UNIQUEID
               password: MD5

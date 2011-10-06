@@ -6,17 +6,6 @@ Feature: Test usre identity REST API
       | test  | Test       | Ipsum     | lorem    |
 
 
-  Scenario: Use Internal api to get user's public data.
-    Given I am not logged in
-    When I use Internal API to request user "test"
-    Then I should get the following user
-      | Login | First Name | Last Name |
-      | test  | Test       | Ipsum     |
-    But I should not get "logout" field
-    When I use Internal API to logout
-    Then I should get "failure" response
-
-
   Scenario: Use Internal API to login with correct credentials.
     Given I am not logged in
     When I use Internal API to login with "test" and "lorem"
@@ -26,6 +15,15 @@ Feature: Test usre identity REST API
     When I use Internal API to logout
     Then I should get "success" response
 
+  Scenario: Use Internal api to get user's public data.
+    Given I am not logged in
+    When I use Internal API to request user "test"
+    Then I should get the following user
+      | Login | First Name | Last Name |
+      | test  | Test       | Ipsum     |
+    But I should not get "logout" field
+    When I use Internal API to logout
+    Then I should get "failure" response
 
   Scenario: Use Internal API to login with incorrect credentials.
     Given I am not logged in
