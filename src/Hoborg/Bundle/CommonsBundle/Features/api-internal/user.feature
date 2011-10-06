@@ -15,6 +15,7 @@ Feature: Test usre identity REST API
     When I use Internal API to logout
     Then I should get "success" response
 
+
   Scenario: Use Internal api to get user's public data.
     Given I am not logged in
     When I use Internal API to request user "test"
@@ -24,6 +25,7 @@ Feature: Test usre identity REST API
     But I should not get "logout" field
     When I use Internal API to logout
     Then I should get "failure" response
+
 
   Scenario: Use Internal API to login with incorrect credentials.
     Given I am not logged in

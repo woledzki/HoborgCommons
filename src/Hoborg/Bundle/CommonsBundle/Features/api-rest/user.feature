@@ -1,9 +1,9 @@
 Feature: Test usre identity REST API
 
   Background:
-#    Given a identity user exist:
-#      | Login | Name | Lastname | Password |
-#      | test  | Test | Ipsum    | lorem    |
+    Given a identity user exist:
+      | Login | First Name | Last Name | Password |
+      | test  | Test       | Ipsum     | lorem    |
 
 
   Scenario: Use REST api to get user's public data.
