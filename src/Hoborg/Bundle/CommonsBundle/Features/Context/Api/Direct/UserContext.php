@@ -33,18 +33,32 @@ class UserContext extends BehatContext {
 			$userArray = $user->toArray();
 		}
 
+		// save resposne array.
 		$this->getMainContext()->getSubcontext('api_response')->response = $userArray;
+
+		// save loggd user
+		$registry = $this->getMainContext()->getSubcontext('phabric_creator')->getRegistry();
+		$registry->add('user_by_login', $login, $user);
 	}
 
 
 	/**
-	 * @When /^I use Internal API to logout(?: "([^"]+)?")?$/
+	 * @When /^I use Internal API to logout(?: user)? "([^"]+)"$/
 	 */
-	public function iUseInternalApiToLogout($userLogin = null) {
+	public function iUseInternalApiToLogout($userLogin) {
 		$container = $this->getContainer();
 
-		// save this response
-		//		$user = $container->get('hoborg.identity')->logout($userLogin);
+		if (empty($userLogin)) {
+			throw new \Exception('Empty login strings');
+		} else {
+			$registry = $this->getMainContext()->getSubcontext('phabric_creator')->getRegistry();
+			$user = $registry->get('user_by_login', $userLogin);
+			if (empty($user)) {
+				throw new \Exception("User [$userLogin] not found in registry.");
+			}
+
+			$response = $container->get('hoborg.identity')->logout($user->getToken());
+		}
 	}
 
 

@@ -77,7 +77,8 @@ class ResponseContext extends BehatContext {
 			'login' => 'login',
 			'first name' => 'firstName',
 			'last name' => 'lastName',
-			'logout' => 'logout'
+			'logout' => 'logout',
+			'token' => 'token',
 		);
 		return $mapping[strtolower($header)];
 	}

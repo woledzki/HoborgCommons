@@ -13,7 +13,7 @@ Feature: Test usre identity REST API
       | Login | First Name | Last Name |
       | test  | Test       | Ipsum     |
     But I should not get "logout" field
-    When I use REST API to logout
+    When I use REST API to logout user "test"
     Then I should get "failure" response
 
 
@@ -23,7 +23,7 @@ Feature: Test usre identity REST API
     Then I should get the following user
       | Login | First Name | Last Name |
       | test  | Test       | Ipsum     |
-    When I use REST API to logout
+    When I use REST API to logout user "test"
     Then I should get "success" response
 
 
@@ -31,5 +31,5 @@ Feature: Test usre identity REST API
     Given I am not logged in
     When I use REST API to login with "test" and "wrong password"
     Then I should get "empty" response
-    When I use REST API to logout
+    When I use REST API to logout user "test"
     Then I should get "failure" response

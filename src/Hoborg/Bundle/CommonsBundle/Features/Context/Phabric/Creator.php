@@ -16,6 +16,8 @@ class Creator extends BehatContext {
 
 	protected $phabric = null;
 
+	protected $registry = null;
+
 	public function __construct($parameters) {
 		parent::__construct($parameters);
 
@@ -23,6 +25,8 @@ class Creator extends BehatContext {
 		$db = $this->getContainer()->get('doctrine')->getConnection(self::DB_IDENTITY);
 		$datasource = new \Phabric\Datasource\Doctrine($db, $phabricConfig['entities']);
 		$this->phabric = new \Phabric\Phabric($datasource);
+
+		$this->registry = new \Phabric\Registry();
 
 		$this->phabric->addDataTransformation(
 			'MD5', function($string) {
@@ -38,6 +42,21 @@ class Creator extends BehatContext {
 		);
 
 		$this->setupUserEntity($phabricConfig);
+	}
+
+	public function getPhabric() {
+		return $this->phabric;
+	}
+
+	public function getRegistry() {
+		return $this->registry;
+	}
+
+	/**
+	 * @AfterScenario
+	 */
+	public static function tearDown($event) {
+		$event->getContext()->getSubcontext('phabric_creator')->phabric->reset();
 	}
 
 	protected function setupUserEntity($phabricConfig) {

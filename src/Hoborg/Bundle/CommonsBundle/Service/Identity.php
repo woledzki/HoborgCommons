@@ -3,6 +3,7 @@ namespace Hoborg\Bundle\CommonsBundle\Service;
 
 use Hoborg\Bundle\CommonsBundle\Mapper\Factory;
 use Hoborg\Bundle\CommonsBundle\Service\Identity\User\Login;
+use Hoborg\Bundle\CommonsBundle\Service\Identity\User\Logout;
 use Symfony\Component\HttpFoundation\Response;
 
 class Identity {
@@ -28,7 +29,7 @@ class Identity {
 	 * @return Hoborg\Bundle\CommonsBundle\Model\Identity\User
 	 */
 	public function login($login, $password) {
-		$login = new Login($login, $password, $this->mapperFactory->getUserMapper());
+		$login = new Login($login, $password, $this->mapperFactory->getUserMapper(), $this->mapperFactory->getUserTokenMapper());
 		$user = $login->process();
 		return $user;
 	}
@@ -39,6 +40,9 @@ class Identity {
 	 * @param string $token
 	 */
 	public function logout($token) {
+		$logout = new Logout($token, $this->mapperFactory->getUserMapper(), $this->mapperFactory->getUserTokenMapper());
+		$user = $logout->process();
+		return $user;
 	}
 
 	/**

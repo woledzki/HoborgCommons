@@ -8,21 +8,28 @@ class Login extends Call {
 	protected $login = null;
 	protected $password = null;
 
-	public function __construct($login, $password, $userMapper) {
+	// mappers
+	protected $userMapper;
+	protected $userTokenMapper;
+
+	public function __construct($login, $password, $userMapper, $userTokenMapper) {
 		$this->login = $login;
 		$this->password = $password;
+
+		// mappers
 		$this->userMapper = $userMapper;
+		$this->userTokenMapper = $userTokenMapper;
 	}
 
 	public function process() {
-//		$userTokenMapper = Commons_Model_Mapper_Factory::getIdentityUserTokenMapper();
-
 		$user = $this->userMapper->getUserByLoginAndPassword($this->login, $this->password);
+
+		if (!empty($user)) {
+			// create new Token - one user can have multiple tokens/sessions
+			$userToken = $this->userTokenMapper->createTokenForUserId($user->getId());
+			$user->assignToken($userToken);
+		}
+
 		return $user;
-
-		// create new Token - one user can have multiple tokens/sessions
-//		$userToken = $userTokenMapper->createTokenForUserId($user->getId());
-
-//		return Hoborg_Rpc_Response::getArray($userToken, Hoborg_Rpc_Response::CODE_SUCCESS);
 	}
 }

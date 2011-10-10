@@ -1,7 +1,8 @@
 <?php
 namespace Hoborg\Bundle\CommonsBundle\Mapper;
 
-use Hoborg\Bundle\CommonsBundle\Mapper\Identity\User;
+use Hoborg\Bundle\CommonsBundle\Mapper\Identity\User,
+	Hoborg\Bundle\CommonsBundle\Mapper\Identity\UserToken;
 
 class Factory {
 
@@ -11,6 +12,11 @@ class Factory {
 	 * @var Hoborg\Bundle\CommonsBundle\Mapper\User
 	 */
 	protected $userMapper = null;
+
+	/**
+	 * @var Hoborg\Bundle\CommonsBundle\Mapper\UserToken
+	 */
+	protected $userTokenMapper = null;
 
 	/**
 	 * DB adapter
@@ -42,4 +48,17 @@ class Factory {
 		return $this->userMapper;
 	}
 
+	/**
+	 * Returns UserToken mapper.
+	 *
+	 * @return Hoborg\Bundle\CommonsBundle\Mapper\Identity\UserToken
+	 */
+	public function getUserTokenMapper() {
+		if (null === $this->userTokenMapper) {
+			$adapter = $this->connectionFactory->getConnection(self::DB_IDENTITY_NAME);
+			$this->userTokenMapper = new UserToken($adapter);
+		}
+
+		return $this->userTokenMapper;
+	}
 }

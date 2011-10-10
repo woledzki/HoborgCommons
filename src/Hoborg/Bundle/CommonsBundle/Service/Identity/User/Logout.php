@@ -1,9 +1,25 @@
 <?php
+namespace Hoborg\Bundle\CommonsBundle\Service\Identity\User;
 
-class Commons_Lib_Rpc_Identity_Logout
-extends Commons_Lib_Rpc_Identity_aCall {
+use Hoborg\Bundle\CommonsBundle\Service\Call;
 
-    public function process($userToken) {
-        return true;
-    }
+class Logout extends Call {
+
+	protected $token;
+
+	// mappers
+	protected $userMapper;
+	protected $userTokenMapper;
+
+	public function __construct($token, $userMapper, $userTokenMapper) {
+		$this->token = $token;
+
+		// mappers
+		$this->userMapper = $userMapper;
+		$this->userTokenMapper = $userTokenMapper;
+	}
+
+	public function process() {
+
+	}
 }
