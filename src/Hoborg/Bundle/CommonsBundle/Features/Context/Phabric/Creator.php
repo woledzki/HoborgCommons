@@ -69,8 +69,7 @@ class Creator extends BehatContext {
 	 * @Given /^a identity user exist:$/
 	 */
 	public function aIdentityUserExist(TableNode $users) {
-		$user = $this->phabric->getEntity('user');
-		$user->updateFromTable($users);
+		$this->phabric->updateFromTable('user', $users);
 	}
 
 }
